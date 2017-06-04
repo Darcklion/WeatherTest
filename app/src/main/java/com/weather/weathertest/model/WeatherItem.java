@@ -3,11 +3,13 @@ package com.weather.weathertest.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
+
 /**
  * Created by ofedzhora on 04.06.2017.
  */
 
-class WeatherItem {
+public class WeatherItem {
     @Expose
     @SerializedName("dt")
     private long date;
@@ -19,7 +21,7 @@ class WeatherItem {
 
     @Expose
     @SerializedName("pressure")
-    private int pressure;
+    private float pressure;
 
     @Expose
     @SerializedName("humidity")
@@ -27,7 +29,7 @@ class WeatherItem {
 
     @Expose
     @SerializedName("weather")
-    private Weather weather;
+    private ArrayList<Weather> weather;
 
     @Expose
     @SerializedName("speed")
@@ -57,11 +59,11 @@ class WeatherItem {
         this.temperature = temperature;
     }
 
-    public int getPressure() {
+    public float getPressure() {
         return pressure;
     }
 
-    public void setPressure(int pressure) {
+    public void setPressure(float pressure) {
         this.pressure = pressure;
     }
 
@@ -73,11 +75,11 @@ class WeatherItem {
         this.humidity = humidity;
     }
 
-    public Weather getWeather() {
+    public ArrayList<Weather> getWeather() {
         return weather;
     }
 
-    public void setWeather(Weather weather) {
+    public void setWeather(ArrayList<Weather> weather) {
         this.weather = weather;
     }
 

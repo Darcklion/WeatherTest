@@ -7,28 +7,28 @@ import com.google.gson.annotations.SerializedName;
  * Created by ofedzhora on 04.06.2017.
  */
 
-class Coordinates {
+public class Coordinates {
     @Expose
     @SerializedName("lat")
-    private long lat;
+    private float lat;
 
     @Expose
     @SerializedName("lon")
-    private long lon;
+    private float lon;
 
-    public long getLat() {
+    public float getLat() {
         return lat;
     }
 
-    public void setLat(long lat) {
+    public void setLat(float lat) {
         this.lat = lat;
     }
 
-    public long getLon() {
+    public float getLon() {
         return lon;
     }
 
-    public void setLon(long lon) {
+    public void setLon(float lon) {
         this.lon = lon;
     }
 }

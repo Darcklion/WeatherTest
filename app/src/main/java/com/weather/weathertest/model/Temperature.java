@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName;
  * Created by ofedzhora on 04.06.2017.
  */
 
-class Temperature {
+public class Temperature {
     @Expose
     @SerializedName("day")
     private float day;
