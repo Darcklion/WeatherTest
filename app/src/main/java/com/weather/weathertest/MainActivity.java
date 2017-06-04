@@ -6,7 +6,11 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.weather.weathertest.fragments.HelpFragment;
 import com.weather.weathertest.fragments.LocationFragment;
 import com.weather.weathertest.fragments.LocationListFragment;
@@ -15,11 +19,24 @@ public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar = null;
     BottomNavigationView bottomNavigation = null;
+    private GoogleApiClient mGoogleApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        mGoogleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .enableAutoManage(this, new GoogleApiClient.OnConnectionFailedListener() {
+                    @Override
+                    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+                        Toast.makeText(MainActivity.this, "Google client fail connection", Toast.LENGTH_LONG).show();
+                    }
+                })
+                .build();
 
         bottomNavigation = (BottomNavigationView) findViewById(R.id.bottomNavigation);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
