@@ -10,25 +10,30 @@ import com.google.gson.annotations.SerializedName;
 public class Coordinates {
     @Expose
     @SerializedName("lat")
-    private float lat;
+    private double lat;
 
     @Expose
     @SerializedName("lon")
-    private float lon;
+    private double lon;
 
-    public float getLat() {
+    public Coordinates(double lat, double lon) {
+        this.lat = lat;
+        this.lon = lon;
+    }
+
+    public double getLat() {
         return lat;
     }
 
-    public void setLat(float lat) {
+    public void setLat(double lat) {
         this.lat = lat;
     }
 
-    public float getLon() {
+    public double getLon() {
         return lon;
     }
 
-    public void setLon(float lon) {
+    public void setLon(double lon) {
         this.lon = lon;
     }
 }

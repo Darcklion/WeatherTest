@@ -12,12 +12,12 @@ import com.weather.weathertest.R;
 import com.weather.weathertest.WeatherManager;
 import com.weather.weathertest.WeatherView;
 import com.weather.weathertest.model.Coordinates;
-import com.weather.weathertest.model.Place;
+import com.weather.weathertest.model.PlaceModel;
 import com.weather.weathertest.model.WeatherMapResponse;
 
 public class LocationFragment extends Fragment implements WeatherView {
 
-    Place currentPlace;
+    PlaceModel currentPlaceModel;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -32,12 +32,10 @@ public class LocationFragment extends Fragment implements WeatherView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        Place place = new Place();
-        Coordinates coordinates = new Coordinates();
-        coordinates.setLat(49.842529f);
-        coordinates.setLon(24.026970f);
-        place.setCoordinates(coordinates);
-        WeatherManager.getInstance().getWeatherData(place, this);
+        PlaceModel placeModel = new PlaceModel();
+        Coordinates coordinates = new Coordinates(49.842529, 24.026970);
+        placeModel.setCoordinates(coordinates);
+        WeatherManager.getInstance().getWeatherData(placeModel, this);
     }
 
     @Override

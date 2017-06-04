@@ -5,7 +5,7 @@ import android.os.Message;
 
 import com.google.gson.Gson;
 import com.weather.weathertest.model.Coordinates;
-import com.weather.weathertest.model.Place;
+import com.weather.weathertest.model.PlaceModel;
 import com.weather.weathertest.model.WeatherMapResponse;
 
 import java.io.BufferedReader;
@@ -28,7 +28,7 @@ public class WeatherManager {
 
     private static WeatherManager instance;
     private WeatherMapResponse weatherData;
-    private HashMap<Place, WeatherMapResponse> weatherDataStorage = new HashMap<>();
+    private HashMap<PlaceModel, WeatherMapResponse> weatherDataStorage = new HashMap<>();
     private WeakReference<WeatherView> reference;
 
     private WeatherManager() {
@@ -41,7 +41,7 @@ public class WeatherManager {
         return instance;
     }
 
-    public void getWeatherData (Place location, WeatherView view) {
+    public void getWeatherData (PlaceModel location, WeatherView view) {
         reference = new WeakReference(view);
         WeatherMapResponse weatherMapResponse = weatherDataStorage.get(location);
         if (null == weatherMapResponse)
@@ -49,7 +49,7 @@ public class WeatherManager {
         else view.onWeatherLoaded(weatherMapResponse);
     }
 
-    private void loadWeather (final Place location) {
+    private void loadWeather (final PlaceModel location) {
         final Handler handler = new Handler(new Handler.Callback() {
 
             @Override
@@ -95,7 +95,7 @@ public class WeatherManager {
         }).start();
     }
 
-    private String generateUrl (float lat, float lon, String units) {
+    private String generateUrl (double lat, double lon, String units) {
         return base_url + "lat=" + lat + "&lon=" + lon + "&appid=" + API_KEY + "&units=" + units;
     }
 

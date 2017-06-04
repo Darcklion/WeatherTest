@@ -1,14 +1,16 @@
 package com.weather.weathertest.model;
 
+import java.io.Serializable;
+
 /**
  * Created by ofedzhora on 04.06.2017.
  */
 
-public class Place {
+public class PlaceModel implements Serializable {
     private Coordinates coordinates;
     private String name;
 
-    public Place() {
+    public PlaceModel() {
     }
 
     public Coordinates getCoordinates() {

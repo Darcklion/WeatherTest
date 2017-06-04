@@ -1,6 +1,6 @@
 package com.weather.weathertest;
 
-import com.weather.weathertest.model.Place;
+import com.weather.weathertest.model.PlaceModel;
 
 import java.util.ArrayList;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class LocationManager {
 
     private static LocationManager instance;
-    private ArrayList<Place> placesList = new ArrayList<Place>();
+    public ArrayList<PlaceModel> placesList = new ArrayList<PlaceModel>();
 
     private LocationManager() {
     }
@@ -23,11 +23,15 @@ public class LocationManager {
         return instance;
     }
 
-    public Place getPlace (int id) {
+    public PlaceModel getPlace (int id) {
         return placesList.get(id);
     }
 
-    public void addPlace (Place place) {
-        placesList.add(place);
+    public void addPlace (PlaceModel placeModel) {
+        placesList.add(placeModel);
+    }
+
+    public void removePlace (PlaceModel placeModel) {
+        placesList.remove(placeModel);
     }
 }

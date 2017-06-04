@@ -4,25 +4,33 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import com.weather.weathertest.LocationListAdapter;
+import com.weather.weathertest.LocationManager;
+import com.weather.weathertest.PlacesListView;
 import com.weather.weathertest.R;
+import com.weather.weathertest.model.Coordinates;
+import com.weather.weathertest.model.PlaceModel;
 
 import static android.app.Activity.RESULT_OK;
 
-public class LocationListFragment extends Fragment {
+public class LocationListFragment extends Fragment implements PlacesListView {
 
     private int PLACE_PICKER_REQUEST = 1;
+    private RecyclerView recyclerView;
 
     public LocationListFragment() {
         // Required empty public constructor
@@ -39,6 +47,16 @@ public class LocationListFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_location_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        recyclerView = (RecyclerView) view.findViewById(R.id.list);
+        LocationListAdapter adapter = new LocationListAdapter(LocationManager.getInstance().placesList, getActivity(), this);
+        recyclerView.setAdapter(adapter);
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), manager.getOrientation()));
+        recyclerView.setLayoutManager(manager);
     }
 
     @Override
@@ -70,9 +88,22 @@ public class LocationListFragment extends Fragment {
         if (requestCode == PLACE_PICKER_REQUEST) {
             if (resultCode == RESULT_OK) {
                 Place place = PlacePicker.getPlace(getActivity(), data);
-                String toastMsg = String.format("Place: %s", place.getName());
-                Toast.makeText(getActivity(), toastMsg, Toast.LENGTH_LONG).show();
+                PlaceModel model = new PlaceModel();
+                model.setName(place.getName().toString());
+                model.setCoordinates(new Coordinates(place.getLatLng().latitude, place.getLatLng().longitude));
+                LocationManager.getInstance().addPlace(model);
+                ((LocationListAdapter)recyclerView.getAdapter()).setItemsList(LocationManager.getInstance().placesList);
+                recyclerView.getAdapter().notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    public void onPlaceClick(PlaceModel placeModel) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("place", placeModel);
+        LocationFragment locationFragment = new LocationFragment();
+        locationFragment.setArguments(bundle);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.tabFragmentHolder, locationFragment).commit();
     }
 }
