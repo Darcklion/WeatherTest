@@ -48,11 +48,11 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     public void onBindViewHolder(WeatherListAdapter.WeatherViewHolder holder, int position) {
         WeatherItem model = itemsList.get(position);
         holder.day.setText(DateUtils.getRelativeTimeSpanString(model.getDt() * 1000));
-        holder.weather.setText(model.getWeather().get(position).getDescription());
+        holder.weather.setText(model.getWeather().get(0).getDescription());
         holder.temperature.setText(String.valueOf(model.getTemperature().getDay()) + getTemperatureSymbol());
         holder.humidity.setText(model.getHumidity() + "%");
         holder.windSpeed.setText(String.valueOf(model.getWindSpeed()) + getSpeedText());
-        ImageViewLoader.loadFromUrl(BASE_ICON_URL + model.getWeather().get(position).getIcon() + ".png", holder.weatherImage);
+        ImageViewLoader.loadFromUrl(BASE_ICON_URL + model.getWeather().get(0).getIcon() + ".png", holder.weatherImage);
         Log.d("ICON", model.getWeather().get(0).getIcon());
     }
 

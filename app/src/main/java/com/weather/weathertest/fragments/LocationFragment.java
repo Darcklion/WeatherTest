@@ -41,14 +41,20 @@ public class LocationFragment extends Fragment implements WeatherView {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
         recyclerView = (RecyclerView) view.findViewById(R.id.weatherList);
-        if (null != getArguments()){
-            PlaceModel place = (PlaceModel) getArguments().getSerializable("place");
-            WeatherManager.getInstance().getWeatherData(place, this);
-        }
+        if (null != getArguments())
+            loadWeatherData((PlaceModel) getArguments().getSerializable("place"));
+
+        if (null != savedInstanceState && null != savedInstanceState.getSerializable("model"))
+            loadWeatherData((PlaceModel) savedInstanceState.getSerializable("model"));
 
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), manager.getOrientation()));
         recyclerView.setLayoutManager(manager);
+    }
+
+    private void loadWeatherData(PlaceModel model) {
+        currentPlaceModel = model;
+        WeatherManager.getInstance().getWeatherData(currentPlaceModel, this);
     }
 
     @Override
@@ -59,8 +65,8 @@ public class LocationFragment extends Fragment implements WeatherView {
         recyclerView.setVisibility(View.VISIBLE);
     }
 
-//    @Override
-//    public void onSaveInstanceState(Bundle outState) {
-//        outState.put
-//    }
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("model", currentPlaceModel);
+    }
 }

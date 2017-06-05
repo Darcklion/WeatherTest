@@ -18,10 +18,11 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import com.weather.weathertest.adapters.LocationListAdapter;
-import com.weather.weathertest.managers.LocationManager;
-import com.weather.weathertest.interfaces.PlacesListView;
+import com.weather.weathertest.MainActivity;
 import com.weather.weathertest.R;
+import com.weather.weathertest.adapters.LocationListAdapter;
+import com.weather.weathertest.interfaces.PlacesListView;
+import com.weather.weathertest.managers.LocationManager;
 import com.weather.weathertest.model.Coordinates;
 import com.weather.weathertest.model.PlaceModel;
 
@@ -105,5 +106,6 @@ public class LocationListFragment extends Fragment implements PlacesListView {
         LocationFragment locationFragment = new LocationFragment();
         locationFragment.setArguments(bundle);
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.tabFragmentHolder, locationFragment).commit();
+        ((MainActivity)getActivity()).lastIndex = R.id.action_location;
     }
 }

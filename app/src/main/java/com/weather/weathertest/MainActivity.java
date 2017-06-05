@@ -18,8 +18,9 @@ import com.weather.weathertest.fragments.LocationListFragment;
 public class MainActivity extends AppCompatActivity {
 
     Toolbar toolbar = null;
-    BottomNavigationView bottomNavigation = null;
+    public BottomNavigationView bottomNavigation = null;
     private GoogleApiClient mGoogleApiClient;
+    public int lastIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,8 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
         if (null != savedInstanceState) {
             changeFragment(savedInstanceState.getInt("id"));
-        } else
+        } else{
             changeFragment(R.id.action_list);
+        }
     }
 
     private void changeFragment(int id) {
@@ -75,11 +77,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
+        lastIndex = id;
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("id", bottomNavigation.getSelectedItemId());
+        outState.putInt("id", lastIndex);
         super.onSaveInstanceState(outState);
     }
 }
