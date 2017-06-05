@@ -52,7 +52,7 @@ public class LocationListFragment extends Fragment implements PlacesListView {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         recyclerView = (RecyclerView) view.findViewById(R.id.list);
-        LocationListAdapter adapter = new LocationListAdapter(LocationManager.getInstance().placesList, getActivity(), this);
+        LocationListAdapter adapter = new LocationListAdapter(LocationManager.getInstance(getActivity()).placesList.getPlacesList(), getActivity(), this);
         recyclerView.setAdapter(adapter);
         LinearLayoutManager manager = new LinearLayoutManager(getActivity());
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), manager.getOrientation()));
@@ -91,8 +91,8 @@ public class LocationListFragment extends Fragment implements PlacesListView {
                 PlaceModel model = new PlaceModel();
                 model.setName(place.getName().toString());
                 model.setCoordinates(new Coordinates(place.getLatLng().latitude, place.getLatLng().longitude));
-                LocationManager.getInstance().addPlace(model);
-                ((LocationListAdapter)recyclerView.getAdapter()).setItemsList(LocationManager.getInstance().placesList);
+                LocationManager.getInstance(getActivity()).addPlace(model);
+                ((LocationListAdapter)recyclerView.getAdapter()).setItemsList(LocationManager.getInstance(getActivity()).placesList.getPlacesList());
                 recyclerView.getAdapter().notifyDataSetChanged();
             }
         }

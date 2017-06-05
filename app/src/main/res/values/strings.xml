@@ -6,6 +6,8 @@
     <string name="menu_search">Search</string>
 
     <string name="delete">Delete</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
     <string name="deleting_item">Deleting place</string>
     <string name="deleting_description">Do you want delete this place?</string>
 

@@ -57,13 +57,18 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
                 builder.setTitle(R.string.deleting_item);
                 builder.setMessage(R.string.deleting_description);
-                builder.setCancelable(false);
+                builder.setCancelable(true);
+                builder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
                 builder.setPositiveButton(
-                        R.string.delete,
+                        R.string.yes,
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                LocationManager.getInstance().removePlace(itemsList.get(holder.getAdapterPosition()));
-                                itemsList.remove(holder.getAdapterPosition());
+                                LocationManager.getInstance(context).removePlace(itemsList.get(holder.getAdapterPosition()));
                                 notifyDataSetChanged();
                                 dialog.cancel();
                             }
@@ -72,7 +77,8 @@ public class LocationListAdapter extends RecyclerView.Adapter<LocationListAdapte
                 alert.setOnShowListener(new DialogInterface.OnShowListener() {
                     @Override
                     public void onShow(DialogInterface dialogInterface) {
-                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                        alert.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+                        alert.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
                     }
                 });
                 alert.show();
