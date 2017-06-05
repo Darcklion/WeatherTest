@@ -1,4 +1,4 @@
-package com.weather.weathertest;
+package com.weather.weathertest.adapters;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.weather.weathertest.R;
+import com.weather.weathertest.interfaces.PlacesListView;
+import com.weather.weathertest.managers.LocationManager;
 import com.weather.weathertest.model.PlaceModel;
 
 import java.util.ArrayList;

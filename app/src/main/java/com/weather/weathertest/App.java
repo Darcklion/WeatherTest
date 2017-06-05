@@ -2,6 +2,8 @@ package com.weather.weathertest;
 
 import android.app.Application;
 
+import com.weather.weathertest.managers.LocationManager;
+
 /**
  * Created by ofedzhora on 05.06.2017.
  */

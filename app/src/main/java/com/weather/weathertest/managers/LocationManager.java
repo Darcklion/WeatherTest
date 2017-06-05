@@ -1,4 +1,4 @@
-package com.weather.weathertest;
+package com.weather.weathertest.managers;
 
 import android.content.Context;
 import android.content.SharedPreferences;

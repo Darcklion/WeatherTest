@@ -1,9 +1,10 @@
-package com.weather.weathertest;
+package com.weather.weathertest.managers;
 
 import android.os.Handler;
 import android.os.Message;
 
 import com.google.gson.Gson;
+import com.weather.weathertest.interfaces.WeatherView;
 import com.weather.weathertest.model.Coordinates;
 import com.weather.weathertest.model.PlaceModel;
 import com.weather.weathertest.model.WeatherMapResponse;
@@ -30,6 +31,7 @@ public class WeatherManager {
     private WeatherMapResponse weatherData;
     private HashMap<PlaceModel, WeatherMapResponse> weatherDataStorage = new HashMap<>();
     private WeakReference<WeatherView> reference;
+    private boolean isMetricUsed = true;
 
     private WeatherManager() {
     }
@@ -101,5 +103,9 @@ public class WeatherManager {
 
     private String getUnits () {
         return "metric";
+    }
+
+    public boolean isMetricUsed() {
+        return isMetricUsed;
     }
 }

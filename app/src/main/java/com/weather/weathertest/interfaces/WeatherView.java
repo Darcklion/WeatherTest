@@ -1,4 +1,4 @@
-package com.weather.weathertest;
+package com.weather.weathertest.interfaces;
 
 import com.weather.weathertest.model.WeatherMapResponse;
 

@@ -3,21 +3,28 @@ package com.weather.weathertest.fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+import android.widget.ProgressBar;
 
 import com.weather.weathertest.R;
-import com.weather.weathertest.WeatherManager;
-import com.weather.weathertest.WeatherView;
-import com.weather.weathertest.model.Coordinates;
+import com.weather.weathertest.adapters.WeatherListAdapter;
+import com.weather.weathertest.managers.WeatherManager;
+import com.weather.weathertest.interfaces.WeatherView;
 import com.weather.weathertest.model.PlaceModel;
 import com.weather.weathertest.model.WeatherMapResponse;
+
+import java.util.ArrayList;
 
 public class LocationFragment extends Fragment implements WeatherView {
 
     PlaceModel currentPlaceModel;
+    ProgressBar progressBar;
+    RecyclerView recyclerView;
 
     public LocationFragment() {
         // Required empty public constructor
@@ -32,15 +39,24 @@ public class LocationFragment extends Fragment implements WeatherView {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        PlaceModel placeModel = new PlaceModel();
-        Coordinates coordinates = new Coordinates(49.842529, 24.026970);
-        placeModel.setCoordinates(coordinates);
-        WeatherManager.getInstance().getWeatherData(placeModel, this);
+        progressBar = (ProgressBar) view.findViewById(R.id.progressBar);
+        recyclerView = (RecyclerView) view.findViewById(R.id.weatherList);
+        if (null != getArguments()){
+            PlaceModel place = (PlaceModel) getArguments().getSerializable("place");
+            WeatherManager.getInstance().getWeatherData(place, this);
+        }
+
+        LinearLayoutManager manager = new LinearLayoutManager(getActivity());
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), manager.getOrientation()));
+        recyclerView.setLayoutManager(manager);
     }
 
     @Override
     public void onWeatherLoaded(WeatherMapResponse weatherMapResponse) {
-        Toast.makeText(getActivity(), weatherMapResponse.getCity().getName(), Toast.LENGTH_LONG).show();
+        WeatherListAdapter adapter = new WeatherListAdapter(new ArrayList(weatherMapResponse.getList()), getActivity());
+        recyclerView.setAdapter(adapter);
+        progressBar.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
     }
 
 //    @Override
